@@ -1,9 +1,6 @@
 # TUM-DI-LAB-Helmholtz
 
----
 In this project we will build a fine-tune SAM with topological novel and PEFT techniques. We will train it for instance segmentation on organoids data.
-
----
 
 ## Set up and run this repo.
 
