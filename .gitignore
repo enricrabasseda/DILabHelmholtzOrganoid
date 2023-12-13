@@ -16,4 +16,4 @@
 
 # Delete subfolders
 /data/*/
-/utils/*/
+/utils/__pycache__/
