@@ -1,0 +1,11 @@
+pandas
+numpy
+torch
+IPython
+Pillow
+torchvision
+opencv-python
+matplotlib
+transformers
+datasets
+monai
