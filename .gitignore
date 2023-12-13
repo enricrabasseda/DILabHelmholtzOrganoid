@@ -1,0 +1,19 @@
+# .gitignore
+
+# Ignore all files and directories, then whitelist the ones you want to include
+/*
+
+# Whitelist specific folders
+!/models/
+!/notebooks/
+!/utils/
+!/data/
+
+# Whitelist specific files
+!/README.md
+!/requirements.txt
+!/.gitignore
+
+# Delete subfolders
+/data/*/
+/utils/*/
