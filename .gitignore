@@ -15,5 +15,9 @@
 !/.gitignore
 
 # Delete subfolders
-/data/*/
+# Data
+/data/private/*/
+/data/OrganoID/*/
+/data/test_dataset/
+# Utils
 /utils/__pycache__/
