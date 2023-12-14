@@ -141,7 +141,7 @@ def detect(image, image_source, text_prompt, model, box_threshold = 0.3, text_th
       stride_distance (float): distance to move the big box to reach a bigger set of possible output boxes.
 
   Returns:
-      annotated_frame (numpy.array): image containing all boxes found (W, H, C).
+      annotated_frame (numpy.array): image containing all boxes found (W, H, C) and a identifier.
       boxes_filtered (torch.Tensor): Bounding boxes [N,4], where each row is [xtopleft, ytopleft, xbottomright, ybottomright].
   """
   boxes, logits, phrases = predict(
@@ -175,7 +175,10 @@ def detect(image, image_source, text_prompt, model, box_threshold = 0.3, text_th
     logits_filtered = logits_filtered[selected_indices]
     print("Filtered number of boxes was", prev, ", after NMS is", boxes_filtered.shape[0])
 
+  # Define an identifier for each of the boxes
+  ids = range(len(logits_filtered))
+
   # Annotate using the given function of Grounding DINO library
-  annotated_frame = annotate(image_source=image_source, boxes=boxes_filtered, logits=logits_filtered, phrases=phrases)
+  annotated_frame = annotate(image_source=image_source, boxes=boxes_filtered, logits=logits_filtered, phrases=ids)
   annotated_frame = annotated_frame[...,::-1] # BGR to RGB
   return annotated_frame, boxes_filtered
