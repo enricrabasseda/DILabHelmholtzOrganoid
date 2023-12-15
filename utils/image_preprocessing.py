@@ -8,13 +8,13 @@ def gamma_correction(image, image_source, gamma):
     Gamma correction is the process of adjusting the brightness of an image so colors appear correctly on-screen.
 
     Args:
-      image (torch.Tensor): Tensor containing the image [C, W, H]
-      image_source (np.array): Array containing the original image [W, H, C]
+      image (torch.Tensor): Tensor containing the image [C, H, W]
+      image_source (np.array): Array containing the original image [H, W, C]
       gamma (float): Gamma for the correction.
 
     Returns:
-      image_preprocessed (torch.Tensor): Tensor containing the image after correction [C, W, H]
-      image_source_preprocessed (np.array): Array containing the original image after correction [W, H, C]
+      image_preprocessed (torch.Tensor): Tensor containing the image after correction [C, H, W]
+      image_source_preprocessed (np.array): Array containing the original image after correction [H, W, C]
     """
 
     # Get the signs of all pixels in the image after normalization
