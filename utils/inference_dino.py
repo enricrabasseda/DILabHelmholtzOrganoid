@@ -130,8 +130,8 @@ def detect(image, image_source, text_prompt, model, box_threshold = 0.3, text_th
   repeated information given by other ones.
 
   Args:
-      image (torch.Tensor): Tensor containing the image [C, W, H]
-      image_source (np.array): Array containing the original image [W, H, C]
+      image (torch.Tensor): Tensor containing the image [C, H, W]
+      image_source (np.array): Array containing the original image [H, W, C]
       text_prompt (string): Descriptions of the objects to be searched in the image.
       model: to be imported from Grounding DINO.
       box_threshold (float): value in (0,1) with minimum score of a box to be showed.
@@ -141,7 +141,7 @@ def detect(image, image_source, text_prompt, model, box_threshold = 0.3, text_th
       stride_distance (float): distance to move the big box to reach a bigger set of possible output boxes.
 
   Returns:
-      annotated_frame (numpy.array): image containing all boxes found (W, H, C) and a identifier.
+      annotated_frame (numpy.array): image containing all boxes found (H, W, C) and a identifier.
       boxes_filtered (torch.Tensor): Bounding boxes [N,4], where each row is [xtopleft, ytopleft, xbottomright, ybottomright].
   """
   boxes, logits, phrases = predict(
