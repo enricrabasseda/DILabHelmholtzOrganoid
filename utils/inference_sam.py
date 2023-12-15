@@ -11,7 +11,7 @@ def show_mask(mask, ax, random_color=False):
     Plot a mask.
 
     Args:
-        mask (torch.Tensor): Mask in torch Tensor containing of size of image ([1,W,H])
+        mask (torch.Tensor): Mask in torch Tensor containing of size of image ([1,H,W])
         ax (axis): axis where we plot
         random_color (bool): give a random color to the mask if True
     """
@@ -41,7 +41,7 @@ def show_boxes_on_image(raw_image, boxes):
     Show boxes on the image.
 
     Args:
-        raw_image (np.array): Array containing the original image [W, H, C]
+        raw_image (np.array): Array containing the original image [H, W, C]
         boxes (numpy.array): Array containing all boxes in format ltbr ([B,4])
     """
     plt.figure(figsize=(10,10))
@@ -56,7 +56,7 @@ def show_points_on_image(raw_image, input_points, input_labels=None):
     Show points on the image.
 
     Args:
-        raw_image (np.array): Array containing the original image [W, H, C]
+        raw_image (np.array): Array containing the original image [H, W, C]
         boxes (numpy.array): Array containing all boxes in format ltbr ([B,4])
         points (List): List containing all points in format xy ([P,2])
         input_labels (List): List containing labels for all points ([P])
@@ -77,7 +77,7 @@ def show_points_and_boxes_on_image(raw_image, boxes, input_points, input_labels=
     Show points and boxes on the image.
 
     Args:
-        raw_image (np.array): Array containing the original image [W, H, C]
+        raw_image (np.array): Array containing the original image [H, W, C]
         points (List): List containing all points in format xy ([P,2])
         input_labels (List): List containing labels for all points ([P])
     """
@@ -130,8 +130,8 @@ def show_masks_on_image(raw_image, masks, scores):
     Show masks on the image.
 
     Args:
-        raw_image (np.array): Array containing the original image ([W, H, C]).
-        masks (torch.Tensor): Tensor containing all masks ([1,M,W,H])
+        raw_image (np.array): Array containing the original image ([H, W, C]).
+        masks (torch.Tensor): Tensor containing all masks ([1,M,H,W])
         scores (torch.Tensor): Tensor containing the scores for masks ([M]).
     """
     if len(masks.shape) == 4:
@@ -155,11 +155,11 @@ def draw_mask_together(masks, image, random_color=True):
     Show all masks on a annotated frame for the image.
 
     Args:
-        masks (torch.Tensor): Tensor containing all masks ([1,M,W,H])
+        masks (torch.Tensor): Tensor containing all masks ([1,M,H,W])
         raw_image (np.array): Array containing the original image ([W, H, C])
         random_color (bool): give a random color to the mask if True
     Returns:
-        annotated_frame (np.array): Array containing image with masks ([W,H,C])
+        annotated_frame (np.array): Array containing image with masks ([H,W,C])
     """    
     annotated_image = image
     for mask in masks:
@@ -188,9 +188,9 @@ def sam_inference_from_dino(image_source, boxes, model, processor, device):
         processor (<class 'transformers.models.sam.processing_sam.SamProcessor'>): SAM processor
         device (String): "cpu" if cuda is not available
     Returns:
-        masks (torch.Tensor): Tensor containing all masks ([1,M,W,H])
+        masks (torch.Tensor): Tensor containing all masks ([1,M,H,W])
         scores (torch.Tensor): Tensor containing the scores for masks ([M]).
-        annotated_masks (np.array): Array containing image with masks ([W,H,C])
+        annotated_masks (np.array): Array containing image with masks ([H,W,C])
     """   
     # Load the image and compute the embeddings
     inputs = processor(image_source, return_tensors="pt").to(device)
