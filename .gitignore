@@ -26,6 +26,7 @@
 /data/img_source_list.npy
 /data/masks_list.npy
 /data/private/metadata.json
+/data/intestinal_organoid_dataset/metadata.json
 
 # Utils
 /utils/__pycache__/
