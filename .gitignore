@@ -19,9 +19,10 @@
 /data/private/*/
 /data/OrganoID/*/
 /data/test_dataset/
+/data/intestinal_organoid_dataset/
 /data/boxes_list.npy
 /data/img_source_list.npy
 /data/masks_list.npy
-/data/metadata.json
+/data/private/metadata.json
 # Utils
 /utils/__pycache__/
