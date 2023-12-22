@@ -11,3 +11,4 @@ datasets
 monai
 patchify
 tifffile
+imagecodecs
