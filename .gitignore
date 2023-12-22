@@ -16,17 +16,22 @@
 
 # Delete subfolders
 # Data
+# |
+# |->  Private
+/data/private/metadata.json
 /data/private/*/
+# |->  OrganoID
 /data/OrganoID/*/
-/data/test_dataset/
+# |->  colon_dataset: Organoseg
+/data/colon_dataset/*/
+/data/colon_dataset/metadata.json
+# |->  intestinal_organoid_dataset: Orgaquant
 /data/intestinal_organoid_dataset/*/
 /data/intestinal_organoid_dataset/test_labels.csv
 /data/intestinal_organoid_dataset/train_labels.csv
-/data/boxes_list.npy
-/data/img_source_list.npy
-/data/masks_list.npy
-/data/private/metadata.json
 /data/intestinal_organoid_dataset/metadata.json
+# |-> test_dataset
+/data/test_dataset/
 
 # Utils
 /utils/__pycache__/
