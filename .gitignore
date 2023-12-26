@@ -30,6 +30,8 @@
 /data/intestinal_organoid_dataset/test_labels.csv
 /data/intestinal_organoid_dataset/train_labels.csv
 /data/intestinal_organoid_dataset/metadata.json
+/data/intestinal_organoid_dataset/old_metadata.json
+
 # |-> test_dataset
 /data/test_dataset/
 
