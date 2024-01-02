@@ -65,5 +65,7 @@ class SAMDataset(Dataset):
 
     # add ground truth segmentation
     inputs["ground_truth_mask"] = ground_truth_mask
+    # add original image
+    inputs["original_image"] = image
 
     return inputs
