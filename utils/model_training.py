@@ -12,7 +12,7 @@ def train_model(model, optimizer, seg_loss,
         seg_loss (class): loss to use for the training given as a class with a forward function
         dataloader (torch.utils.data.dataloader.DataLoader): dataloader for the dataset
         num_epochs (int): number of epochs for the training
-        device (string): "cuda" if available, otherwise "cpu"
+        device (string): "cuda" if available, otherwise "cpu" 
     """
     model.to(device)
     model.train()
