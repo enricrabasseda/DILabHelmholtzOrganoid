@@ -18,6 +18,8 @@
 # Data
 # |
 # |->  Private
+/data/private/old_metadata_enric.json
+/data/private/old_metadata_hanyi.json
 /data/private/metadata.json
 /data/private/*/
 # |->  OrganoID
