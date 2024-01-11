@@ -21,12 +21,12 @@ def compute_loss(pred_data, true_data, geometric_loss, topo_param):
     """    
     # Compute each loss
     geom_loss = geometric_loss(pred_data, true_data)
-    topo_loss = topo_loss(pred_data, true_data, lamda = topo_param['lamda'], 
+    top_loss = topo_loss(pred_data, true_data, lamda = topo_param['lamda'], 
                                  interp = topo_param['interp'], feat_d = topo_param['feat_d'],
                                  loss_q = topo_param['loss_q'], loss_r = topo_param['loss_r'])
     
     # Combine losses
-    loss = geom_loss + topo_loss
+    loss = geom_loss + top_loss
 
     return loss
 
