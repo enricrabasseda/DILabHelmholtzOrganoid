@@ -31,17 +31,17 @@ def topo_loss(pred_obj, true_obj, lamda, interp = 0,
         return 0.0
 
     if interp != 0:
-        size = (interp,) * 3
+        size = (interp,) * 2
         pred_obj_ = nn.functional.interpolate(
             input=pred_obj,
             size=size,
-            mode='trilinear',
+            mode='bilinear',
             align_corners=True,
         )
         true_obj_ = nn.functional.interpolate(
             input=true_obj,
             size=size,
-            mode='trilinear',
+            mode='bilinear',
             align_corners=True,
         )
 
