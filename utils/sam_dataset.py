@@ -18,10 +18,10 @@ def perturb_bounding_box(box, img_dim):
     H, W = img_dim
 
     # Perturb box
-    x_min = max(0, box[0] + np.random.randint(-20, 20))
-    x_max = min(W, box[2] + np.random.randint(-20, 20))
-    y_min = max(0, box[1] + np.random.randint(-20, 20))
-    y_max = min(H, box[3] + np.random.randint(-20, 20))
+    x_min = max(0, box[0] + np.random.randint(-15, 15))
+    x_max = min(W, box[2] + np.random.randint(-15, 15))
+    y_min = max(0, box[1] + np.random.randint(-15, 15))
+    y_max = min(H, box[3] + np.random.randint(-15, 15))
 
     # Save perturbed box
     perturbed_box = [x_min, y_min, x_max, y_max]
