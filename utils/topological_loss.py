@@ -82,7 +82,7 @@ def topo_loss(pred_obj, true_obj, lamda, interp = 0,
     ])
 
     # Use a reduction method for the loss like mean
-    topological_loss = topological_loss.mean()
+    loss = topological_loss.mean()
 
     # In case `loss_r` is true, add regularization
     if loss_r:
@@ -91,6 +91,8 @@ def topo_loss(pred_obj, true_obj, lamda, interp = 0,
             for pred_batch in pers_info_pred for info in pred_batch
         ])
 
-        topological_loss += topo_reg.mean()
+        loss = topological_loss + topo_reg.mean()
+
+    loss *= lamda
     
-    return lamda*topological_loss   
+    return loss
