@@ -13,3 +13,4 @@ patchify
 tifffile
 imagecodecs
 torch_topological
+torchmetrics

@@ -12,7 +12,7 @@ def perturb_bounding_box(box, img_dim):
         box (np.array): Bounding box in format [xtopleft, ytopleft, xbottomright, ybottomright]
         img_dim (np.array): Image resolution in format [height, width]
     Returns:
-        perturbed_box (np.array): Perturbed obunding box in format [xtopleft, ytopleft, xbottomright, ybottomright]
+        perturbed_box (np.array): Perturbed bounding box in format [xtopleft, ytopleft, xbottomright, ybottomright]
     """
     # Get image dimensions
     H, W = img_dim
@@ -27,6 +27,24 @@ def perturb_bounding_box(box, img_dim):
     perturbed_box = [x_min, y_min, x_max, y_max]
 
     return perturbed_box
+
+def center_point(box):
+    """
+    Get center point of the prompt box.
+
+    Args:
+        box (np.array): Bounding box in format [xtopleft, ytopleft, xbottomright, ybottomright]
+    Returns:
+        center_point (np.array): Center point of the box in format [x, y].
+    """
+    # Get middle points
+    x = (box[0] + box[2])/2
+    y = (box[1] + box[3])/2
+
+    # Define center point
+    center_point = [x, y]
+
+    return center_point
 
 class SAMDataset(Dataset):
   def __init__(self, dataset, processor, data_folder):
@@ -55,10 +73,13 @@ class SAMDataset(Dataset):
     ground_truth_mask = (gray_mask == 255).astype(np.uint8)
 
     # Perturb bounding box
-    prompt = perturb_bounding_box(item['box'], [H, W])
+    box_prompt = perturb_bounding_box(item['box'], [H, W])
+
+    # Get center point that will be a prompt
+    point_prompt = center_point(box_prompt)
 
     # prepare image and prompt for the model
-    inputs = self.processor(image, input_boxes=[[prompt]], return_tensors="pt")
+    inputs = self.processor(image, input_boxes=[[box_prompt]], input_points=[[point_prompt]], return_tensors="pt")
 
     # remove batch dimension which the processor adds by default
     inputs = {k:v.squeeze(0) for k,v in inputs.items()}
@@ -67,5 +88,7 @@ class SAMDataset(Dataset):
     inputs["ground_truth_mask"] = ground_truth_mask
     # add original image
     inputs["original_image"] = image
+    # add original box
+    inputs["gt_box"] = item['box']
 
     return inputs
