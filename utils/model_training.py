@@ -20,10 +20,9 @@ def compute_loss(pred_data, true_data, geometric_loss, topo_param):
     Returns:
         loss (float): value of the combined loss    
     """    
-    # Compute each loss, geometric loss is configured to apply a sigmoid function to the input automatically
+    # Compute each loss, geometric loss is configured to not apply a sigmoid function to the input automatically
     geom_loss = geometric_loss(pred_data, true_data)
-    # Note we need to apply sigmoid function on pred data, since the loss function will not do it
-    top_loss = topo_loss(torch.sigmoid(pred_data), true_data, lamda = topo_param['lamda'], 
+    top_loss = topo_loss(pred_data, true_data, lamda = topo_param['lamda'], 
                          interp = topo_param['interp'], feat_d = topo_param['feat_d'],
                          loss_q = topo_param['loss_q'], loss_r = topo_param['loss_r'])
     
@@ -32,8 +31,8 @@ def compute_loss(pred_data, true_data, geometric_loss, topo_param):
 
     return loss
 
-def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_dataloader, num_epochs, device, geom_interp = 0,
-                topological_loss = False, topo_param = {'lamda': 1.0, 'interp': 0, 'feat_d': 2, 'loss_q': 2, 'loss_r': False}):
+def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_dataloader, num_epochs, device, patience = 0,
+                geom_interp = 0, topological_loss = False, topo_param = {'lamda': 1.0, 'interp': 0, 'feat_d': 2, 'loss_q': 2, 'loss_r': False}):
     """
     Train a given model given the preferences.
 
@@ -49,13 +48,24 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
         val_dataloader (torch.utils.data.dataloader.DataLoader): dataloader for the validation dataset
         num_epochs (int): number of epochs for the training
         device (string): "cuda" if available, otherwise "cpu" 
+        patience (int): how many epochs to wait to avoid early stopping. Set to zero to not use
     """
     model.to(device)
+
+    # Set up early stopping if needed
+    if patience != 0:
+        # Set up early stopping parameters
+        best_val_loss = float('inf')
+        counter = 0
+
     for epoch in range(num_epochs):
         # Set training mode
         model.train()
         # Train the model on train dataset
         epoch_train_losses = []
+        # Print epoch
+        print(f'EPOCH: {epoch+1}')
+
         for batch in tqdm(train_dataloader):
             # Get ground-truth masks
             ground_truth_masks = batch["ground_truth_mask"].float().unsqueeze(1).to(device)
@@ -88,6 +98,8 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
             else:
                 predicted_masks = F.interpolate(predicted_masks, (m_h, m_w), 
                                                 mode="bilinear", align_corners=False)
+            # Apply sigmoid to get values between 0 and 1
+            predicted_masks = torch.sigmoid(predicted_masks)
 
             # Compute loss
             # If topological loss is needed:
@@ -104,9 +116,11 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
             # optimize
             optimizer.step()
             epoch_train_losses.append(loss.item())
+        
+        # Get mean train loss
+        epoch_train_loss = mean(epoch_train_losses)
 
-        print(f'EPOCH: {epoch+1}')
-        print(f'Train dataset mean loss: {mean(epoch_train_losses)}')
+        print(f'Train dataset mean loss: {epoch_train_loss}')
 
         # Set evaluation mode to set dropout and batch norm. layers to evaluation mode
         model.eval()
@@ -146,7 +160,9 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
                 else:
                     predicted_masks = F.interpolate(predicted_masks, (m_h, m_w), 
                                                     mode="bilinear", align_corners=False)
-
+                # Apply sigmoid to get values between 0 and 1
+                predicted_masks = torch.sigmoid(predicted_masks)
+                
                 # Compute loss
                 # If topological loss is needed:
                 if topological_loss:
@@ -157,5 +173,23 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
                 
                 # Add loss
                 epoch_val_losses.append(loss.item())
+            
+        # Get evaluation loss
+        epoch_val_loss = mean(epoch_val_losses)
         
-        print(f'Validation dataset mean loss: {mean(epoch_val_losses)}')
+        print(f'Validation dataset mean loss: {epoch_val_loss}')
+
+        # Check for improvement in validation loss
+        if patience != 0:
+            if epoch_val_loss < best_val_loss:
+                best_val_loss = epoch_val_loss
+                # Reset the counter since there is improvement
+                counter = 0
+            else:
+                # Increase the counter since there is no improvement
+                counter += 1
+            
+            # Check if early stopping criteria are met
+            if counter >= patience:
+                print(f'Early stopping! No improvement for {patience} consecutive epochs.')
+                break  # Break out of the training loop        

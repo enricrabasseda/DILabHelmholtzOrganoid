@@ -19,6 +19,7 @@
 
 # Utils
 /utils/__pycache__/
+/utils/model_train/
 
 # Models
 /models/*
