@@ -98,6 +98,7 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
             else:
                 predicted_masks = F.interpolate(predicted_masks, (m_h, m_w), 
                                                 mode="bilinear", align_corners=False)
+            
             # Apply sigmoid to get values between 0 and 1
             predicted_masks = torch.sigmoid(predicted_masks)
 
@@ -160,6 +161,7 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
                 else:
                     predicted_masks = F.interpolate(predicted_masks, (m_h, m_w), 
                                                     mode="bilinear", align_corners=False)
+                
                 # Apply sigmoid to get values between 0 and 1
                 predicted_masks = torch.sigmoid(predicted_masks)
                 
@@ -191,5 +193,5 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
             
             # Check if early stopping criteria are met
             if counter >= patience:
-                print(f'Early stopping! No improvement for {patience} consecutive epochs.')
+                print(f'Early stopping at epoch {epoch + 1}! No improvement for {patience} consecutive epochs.')
                 break  # Break out of the training loop        

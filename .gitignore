@@ -20,6 +20,7 @@
 # Utils
 /utils/__pycache__/
 /utils/model_train/
+/utils/metrics/
 
 # Models
 /models/*
