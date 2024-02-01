@@ -88,7 +88,7 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
             # Masks post processing
             predicted_masks = F.interpolate(predicted_masks.squeeze(1), (1024, 1024), 
                                             mode="bilinear", align_corners=False)
-            predicted_masks = predicted_masks[..., :992, :1024]
+            # predicted_masks = predicted_masks[..., :992, :1024]
             # If geometric interpolation, then we downsample the masks: ground-truth and predicted ones
             if geom_interp != 0:
                 predicted_masks = F.interpolate(predicted_masks, (geom_interp, geom_interp), 
@@ -151,7 +151,7 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
                 # Masks post processing
                 predicted_masks = F.interpolate(predicted_masks.squeeze(1), (1024, 1024), 
                                                 mode="bilinear", align_corners=False)
-                predicted_masks = predicted_masks[..., :992, :1024]
+                # predicted_masks = predicted_masks[..., :992, :1024]
                 # If geometric interpolation, then we downsample the masks: ground-truth and predicted ones
                 if geom_interp != 0:
                     predicted_masks = F.interpolate(predicted_masks, (geom_interp, geom_interp), 
