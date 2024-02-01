@@ -49,8 +49,17 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
         num_epochs (int): number of epochs for the training
         device (string): "cuda" if available, otherwise "cpu" 
         patience (int): how many epochs to wait to avoid early stopping. Set to zero to not use
+    
+    Returns:
+        train_losses (List): list containing the train losses for each epoch
+        val_losses (List): list containing the validation losses for each epoch
+        model (transformers.model): model with best performance on validation dataset
     """
     model.to(device)
+
+    # Define lists containing the losses
+    train_losses = []
+    val_losses = []
 
     # Set up early stopping if needed
     if patience != 0:
@@ -88,7 +97,6 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
             # Masks post processing
             predicted_masks = F.interpolate(predicted_masks.squeeze(1), (1024, 1024), 
                                             mode="bilinear", align_corners=False)
-            # predicted_masks = predicted_masks[..., :992, :1024]
             # If geometric interpolation, then we downsample the masks: ground-truth and predicted ones
             if geom_interp != 0:
                 predicted_masks = F.interpolate(predicted_masks, (geom_interp, geom_interp), 
@@ -120,6 +128,7 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
         
         # Get mean train loss
         epoch_train_loss = mean(epoch_train_losses)
+        train_losses.append(epoch_train_loss)
 
         print(f'Train dataset mean loss: {epoch_train_loss}')
 
@@ -151,7 +160,6 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
                 # Masks post processing
                 predicted_masks = F.interpolate(predicted_masks.squeeze(1), (1024, 1024), 
                                                 mode="bilinear", align_corners=False)
-                # predicted_masks = predicted_masks[..., :992, :1024]
                 # If geometric interpolation, then we downsample the masks: ground-truth and predicted ones
                 if geom_interp != 0:
                     predicted_masks = F.interpolate(predicted_masks, (geom_interp, geom_interp), 
@@ -178,6 +186,7 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
             
         # Get evaluation loss
         epoch_val_loss = mean(epoch_val_losses)
+        val_losses.append(epoch_val_loss)
         
         print(f'Validation dataset mean loss: {epoch_val_loss}')
 
@@ -185,6 +194,7 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
         if patience != 0:
             if epoch_val_loss < best_val_loss:
                 best_val_loss = epoch_val_loss
+                best_model = model
                 # Reset the counter since there is improvement
                 counter = 0
             else:
@@ -194,4 +204,9 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
             # Check if early stopping criteria are met
             if counter >= patience:
                 print(f'Early stopping at epoch {epoch + 1}! No improvement for {patience} consecutive epochs.')
-                break  # Break out of the training loop        
+                break  # Break out of the training loop
+
+        else:
+            best_model = model
+        
+    return train_losses, val_losses, best_model 
