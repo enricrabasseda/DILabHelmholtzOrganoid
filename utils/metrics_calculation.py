@@ -73,7 +73,6 @@ def metrics_dict_given_model(model, processor, test_dataloader, prompt, device, 
             # Masks post processing
             predicted_masks = F.interpolate(predicted_masks.squeeze(1), (1024, 1024), 
                                             mode="bilinear", align_corners=False)
-            predicted_masks = predicted_masks[..., :992, :1024]
             predicted_masks = F.interpolate(predicted_masks, (m_h, m_w), 
                                             mode="bilinear", align_corners=False)
             
