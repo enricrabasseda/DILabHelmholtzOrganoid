@@ -16,6 +16,7 @@
 # Data
 /data/*
 !/data/.gitkeep
+!/data/README.md
 
 # Utils
 /utils/__pycache__/

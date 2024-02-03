@@ -28,6 +28,9 @@ We recommend to set up a virtual environment and then install all the required p
 
 The model has been fine-tuned with a private dataset that cannot be provided. However, you can download the hold-out datasets to and place them in `/data/`. More information regarding the datasets structure can be found `/data/README.md`.
 
+### Semi-automatic organoid images annotation
+The private organoid dataset that was used for the fine-tuning of SAM was not annotated. We have implemented a semi-automatic process for data annotation that can be replicated with the notebook `/notebooks/dataset_generation/private_dataset_generation.ipynb`.
+
 ## Model training
 
 In case of training the model it is possible to do it using a Topological loss and Geometrical loss. For more information regarding topological loss see the original literature. After adjusting the training preferences and the hyperparameters run:
@@ -50,5 +53,5 @@ This will evaluate a fine-tuned model from `/models/`folder and compare it to Me
 
 To run some inference cases with the fine-tuned models you can use the notebook `/notebooks/inference_demo.ipynb`. Please save the images on the right folder `/datasets/` and provide a box prompt for a correct usage of the models. 
 
-In this notebook it is also possible to compare the results of organoid detection for a fine-tuned model, MedSAM and SAM ViT-Large.∫
+In this notebook it is also possible to compare the results of organoid detection for a fine-tuned model, MedSAM and SAM ViT-Large.
 
