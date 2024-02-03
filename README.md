@@ -23,3 +23,32 @@ To use the code, please install **Grounding DINO** as it is indicated on their [
 ### Install required libraries
 
 We recommend to set up a virtual environment and then install all the required packages from `requirements.txt`.
+
+## Datasets
+
+The model has been fine-tuned with a private dataset that cannot be provided. However, you can download the hold-out datasets to and place them in `/data/`. More information regarding the datasets structure can be found `/data/README.md`.
+
+## Model training
+
+In case of training the model it is possible to do it using a Topological loss and Geometrical loss. For more information regarding topological loss see the original literature. After adjusting the training preferences and the hyperparameters run:
+
+```
+    python /utils/run_train.py
+```
+
+## Model evaluation
+
+This method requires at least one model to compare in the folder `/models/`. In case of not having fine-tuned any SAM version, like specified above, download our fine-tuned version and save it in the mentioned folder.Run:
+
+```
+    python /utils/evaluate_model.py
+```
+
+This will evaluate a fine-tuned model from `/models/`folder and compare it to MedSAM, SAM ViT-Base, SAM ViT-Large and SAM ViT-Huge computing different metrics. It is possible to adjust the evaluation preferences in the script.
+
+## Inference
+
+To run some inference cases with the fine-tuned models you can use the notebook `/notebooks/inference_demo.ipynb`. Please save the images on the right folder `/datasets/` and provide a box prompt for a correct usage of the models. 
+
+In this notebook it is also possible to compare the results of organoid detection for a fine-tuned model, MedSAM and SAM ViT-Large.∫
+
