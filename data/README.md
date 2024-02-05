@@ -8,7 +8,7 @@ Here are the dimensions of the datasets:
 |:-----------:|:---------:|:--------------:|:--------:|:---------:|
 | Private     |   16134   |      4630      |   4399   | **25163** |
 | OrgaQuant   |   13004   |        -       |   1135   | **14139** |
-| OrganoSeg   |     -     |        -       |   5706   | **5706**  |
+| OrganoSeg   |    3402   |      1112      |   1192   | **5706**  |
 
 ## Private dataset
 
