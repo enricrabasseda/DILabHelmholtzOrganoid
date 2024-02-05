@@ -2,6 +2,13 @@
 
 To train our model we have used a private dataset. After fine-tuning SAM with it, we have tested our model on three hold-out datasets: OrgaQuant, OrganoSeg and OrganoID. 
 
+Here are the dimensions of the datasets:
+
+| **Dataset** | **Train** | **Validation** | **Test** | **Total** |
+|:-----------:|:---------:|:--------------:|:--------:|:---------:|
+| Private     |   16134   |      4630      |   4399   | **25163** |
+| OrgaQuant   |   13004   |        -       |   1135   | **14139** |
+
 ## Private dataset
 
 This private dataset contains images from different lens microscopes without ground-truth masks for the organoids. We have defined a fast semi-automatic tool to annotate the images. 
@@ -13,13 +20,12 @@ The dataset has been splitted in a train, validation and test split. For every s
 The structure of the dataset looks like this:
 
 ```
-    ·private
-    |
-    |-images
-        |-...
-    |-masks
-    |   |-...
-    |-metadata.json
+    private
+    |--images
+    |  |--...
+    |--masks
+    |  |--...
+    |--metadata.json
 ```
 
  The `metadata.json` file contains all the information for every instance of the dataset: framing boxes, path of image and corresponding mask and dataset split.
@@ -38,21 +44,20 @@ This dataset is already given with a train and test split. We have used the test
 The structure of the dataset looks like this:
 
 ```
-    ·intestinal_organoid_dataset
-    |
-    |-test
-    |   |-images
-    |   |   |-...
-    |   |-masks
-    |   |   |-...
-    |-train
-    |   |-images
-    |   |   |-...
-    |   |-masks
-    |   |   |-...
-    |-metadata.json
-    |-test_labels.csv
-    |-train_labels.csv
+    intestinal_organoid_dataset
+    |--test
+    |  |--images
+    |  |  |--...
+    |  |--masks
+    |  |  |--...
+    |--train
+    |  |--images
+    |  |  |--...
+    |  |-masks
+    |  |   |--...
+    |--metadata.json
+    |--test_labels.csv
+    |--train_labels.csv
 ```
 
  The files `train_labels.csv` and `test_labels.csv` contain the original framing boxes for every organoid in each image. The `metadata.json` file contains all the information for every instance of the dataset: framing boxes, path of image and corresponding mask and dataset split.
