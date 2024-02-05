@@ -53,8 +53,8 @@ The structure of the dataset looks like this:
     |--train
     |  |--images
     |  |  |--...
-    |  |-masks
-    |  |   |--...
+    |  |--masks
+    |  |  |--...
     |--metadata.json
     |--test_labels.csv
     |--train_labels.csv
