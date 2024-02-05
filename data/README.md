@@ -8,6 +8,7 @@ Here are the dimensions of the datasets:
 |:-----------:|:---------:|:--------------:|:--------:|:---------:|
 | Private     |   16134   |      4630      |   4399   | **25163** |
 | OrgaQuant   |   13004   |        -       |   1135   | **14139** |
+| OrganoSeg   |     -     |        -       |   5706   | **5706**  |
 
 ## Private dataset
 
@@ -64,6 +65,10 @@ The structure of the dataset looks like this:
  The files `train_labels.csv` and `test_labels.csv` contain the original framing boxes for every organoid in each image. The `metadata.json` file contains all the information for every instance of the dataset: framing boxes, path of image and corresponding mask and dataset split.
 
 
-## Organoseg
+## OrganoSeg
+
+[OrganoSeg](https://www.nature.com/articles/s41598-017-18815-8) presented a dataset with colon and colorectal-cancer organoid morphologies. The original images had resolution 864x648 and also had a mask to identify ground-truth organoids in the image. We have created patches using a sliding window without overlap and for every image we have generated 4 patches of size 432x324. Same work has been done for the masks.
+
+To get instance segmentation masks we have used Connected Component Analysis to connect one unique mask to every organoid. The code can be seen in `/notebooks/dataset_generation/organoseg_dataset_generation.ipynb`.
 
 ## OrganoID
