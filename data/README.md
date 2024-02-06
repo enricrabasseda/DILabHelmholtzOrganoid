@@ -8,7 +8,7 @@ Here are the dimensions of the datasets:
 |:-----------:|:---------:|:--------------:|:--------:|:---------:|
 | Private     |   16134   |      4630      |   4399   | **25163** |
 | OrgaQuant   |   13004   |        -       |   1135   | **14139** |
-| OrganoSeg   |    3402   |      1112      |   1192   | **5706**  |
+| OrganoSeg   |    702    |       241      |   272    | **1215**  |
 
 ## Private dataset
 
@@ -29,7 +29,7 @@ The structure of the dataset looks like this:
         |---...
 ```
 
- The `metadata.json` file contains all the information for every instance of the dataset: framing boxes, path of image and corresponding mask and dataset split.
+ The `metadata.json` file contains all the information for every instance of the dataset: framing boxes, path of organoid's image, corresponding mask and dataset split.
 
 
 ### Private dataset generation
@@ -62,13 +62,36 @@ The structure of the dataset looks like this:
 
 ```
 
- The files `train_labels.csv` and `test_labels.csv` contain the original framing boxes for every organoid in each image. The `metadata.json` file contains all the information for every instance of the dataset: framing boxes, path of image and corresponding mask and dataset split.
+ The files `train_labels.csv` and `test_labels.csv` contain the original framing boxes for every organoid in each image. The `metadata.json` file contains all the information for every instance of the dataset: framing boxes, path of organoid's image, corresponding mask and dataset split.
 
 
 ## OrganoSeg
 
 [OrganoSeg](https://www.nature.com/articles/s41598-017-18815-8) presented a dataset with colon and colorectal-cancer organoid morphologies. The original images had resolution 864x648 and also had a mask to identify ground-truth organoids in the image. We have created patches using a sliding window without overlap and for every image we have generated 4 patches of size 432x324. Same work has been done for the masks.
 
-To get instance segmentation masks we have used Connected Component Analysis to connect one unique mask to every organoid. The code can be seen in `/notebooks/dataset_generation/organoseg_dataset_generation.ipynb`.
+To get instance segmentation masks we have used Connected Component Analysis to connect one unique mask to every organoid. The code can be seen in `/notebooks/dataset_generation/organoseg_dataset_generation.ipynb`. We have filtered out of the dataset all masks that are too small to be detected or cannot be clearly recognize from the image. To do that we kept masks that have an area bigger than 2000 pixels.
+
+The structure of the dataset looks like this:
+
+```
+    colon_dataset
+    |---metadata_semantic_segmentation.json
+    |---metadata_instance_segmentation.json
+    |---original
+    |   |---colon_images
+    |   |   |---...
+    |   |---colon_masks
+    |       |---...
+    |---augmented
+        |---colon_images
+        |   |---...
+        |---colon_instance_masks
+        |   |---...
+        |---colon_masks
+            |---...
+
+```
+
+ The `metadata_semantic_segmentation.json` contains all metadata to use this dataset for semantic segmentation objectives: paths of images and corresponding masks. The file `metadata_instance_segmentation.json` contain all the information for instance segmentation objectives: framing boxes, path of organoid's image, corresponding individual mask and dataset split.
 
 ## OrganoID
