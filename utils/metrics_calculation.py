@@ -1,7 +1,7 @@
 import torch.nn.functional as F
 import torch
 
-from utils.metrics import iou, dsc, surfdist, sensitivity, specificity, hausdorff_dist, ap, f1_score
+from utils.metrics import iou, dsc, sensitivity, specificity, ap, f1_score
 
 from statistics import mean, median
 def metrics_dict_given_model(model, processor, test_dataloader, prompt, device, noised_prompt, statistic):
@@ -22,10 +22,8 @@ def metrics_dict_given_model(model, processor, test_dataloader, prompt, device, 
     """
     iou_values = []
     dsc_values = []
-    # surfdist_values = []
     sens_values = []
     spec_values = []
-    # hausdist_values = []
     ap_values = []
     f1_values = []
 
@@ -83,10 +81,8 @@ def metrics_dict_given_model(model, processor, test_dataloader, prompt, device, 
             # Compute metrics
             iou_values.append(iou(predicted_masks, ground_truth_masks))
             dsc_values.append(dsc(predicted_masks, ground_truth_masks))
-            # surfdist_values.append(surfdist(predicted_masks, ground_truth_masks))
             sens_values.append(sensitivity(predicted_masks, ground_truth_masks))
             spec_values.append(specificity(predicted_masks, ground_truth_masks))
-            # hausdist_values.append(hausdorff_dist(predicted_masks, ground_truth_masks))
             ap_values.append(ap(predicted_masks, ground_truth_masks))
             f1_values.append(f1_score(predicted_masks, ground_truth_masks))
     
