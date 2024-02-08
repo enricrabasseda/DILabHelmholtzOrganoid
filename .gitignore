@@ -16,7 +16,6 @@
 
 # Data
 /data/*
-!/data/.gitkeep
 !/data/README.md
 
 # Outputs
