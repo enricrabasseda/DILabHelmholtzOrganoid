@@ -7,6 +7,7 @@
 !/notebooks/
 !/utils/
 !/data/
+!/outputs/
 
 # Whitelist specific files
 !/README.md
@@ -18,10 +19,9 @@
 !/data/.gitkeep
 !/data/README.md
 
-# Utils
-/utils/__pycache__/
-/utils/model_train/
-/utils/metrics/
+# Outputs
+/outputs/*
+!/outputs/.gitkeep
 
 # Models
 /models/*
