@@ -22,6 +22,9 @@
 /outputs/*
 !/outputs/.gitkeep
 
+# Utils
+/utils/__pycache__
+
 # Models
 /models/*
 !/models/.gitkeep
