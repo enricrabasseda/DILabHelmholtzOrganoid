@@ -31,27 +31,37 @@ The model has been fine-tuned with a private dataset that cannot be provided. Ho
 ### Semi-automatic organoid images annotation
 The private organoid dataset that was used for the fine-tuning of SAM was not annotated. We have implemented a semi-automatic process for data annotation that can be replicated with the notebook `/notebooks/dataset_generation/private_dataset_generation.ipynb`.
 
+For a more simplified version of the pipeline of Grounding DINO and SAM take a look at the notebook `notebooks/inference/dino_and_sam_inference.ipynb`. 
+
 ## Model training
 
-In case of training the model it is possible to do it using a Topological loss and Geometrical loss. For more information regarding topological loss see the original literature. After adjusting the training preferences and the hyperparameters run:
+In case of training the model it is possible to do it using a Topological loss and Geometrical loss. For more information regarding topological loss see the original literature. To train the model using topological loss, adjust the hyperparameters and dataset location and run:
 
 ```
-    python /utils/run_train.py
+    python /utils/train_model/train_topo+geom_private.py
 ```
+
+To train the model using only a geometrical loss, adjust the configuration and dataset location and run:
+
+```
+    python /utils/train_model/train_geom_private.py
+```
+
+These trained models will be saved in the folder `/models/`.
 
 ## Model evaluation
 
-This method requires at least one model to compare in the folder `/models/`. In case of not having fine-tuned any SAM version, like specified above, download our fine-tuned version and save it in the mentioned folder.Run:
+This method requires at least one model to compare in the folder `/models/`. In case of not having fine-tuned any SAM version, like specified above, download our fine-tuned version and save it in the mentioned folder. Depending on the hold-out dataset for which the model needs to be tested there are different python scripts. For example, for OrgaQuant dataset run:
 
 ```
-    python /utils/evaluate_model.py
+    python /utils/evaluate_model/metrics_calculation_orgaquant.py
 ```
 
-This will evaluate a fine-tuned model from `/models/`folder and compare it to MedSAM, SAM ViT-Base, SAM ViT-Large and SAM ViT-Huge computing different metrics. It is possible to adjust the evaluation preferences in the script.
+This will evaluate a fine-tuned model from `/models/` folder and compare it to MedSAM, SAM ViT-Base, SAM ViT-Large and SAM ViT-Huge computing different metrics. It is possible to adjust the evaluation preferences in the script. The results will be saved in the folder `/outputs/`.
 
 ## Inference
 
-To run some inference cases with the fine-tuned models you can use the notebook `/notebooks/inference_demo.ipynb`. Please save the images on the right folder `/datasets/` and provide a box prompt for a correct usage of the models. 
+To test a fine-tuned model on organoid images given a manual box prompt you can use the notebook `notebooks/inference/model_inference.ipynb`. Please save the images on the right folder `/datasets/` and provide a box prompt for a correct usage of the models. 
 
-In this notebook it is also possible to compare the results of organoid detection for a fine-tuned model, MedSAM and SAM ViT-Large.
+In this last notebook it is also possible to compare the results of organoid detection for the fine-tuned model, MedSAM and SAM ViT-Base.
 
