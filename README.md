@@ -35,7 +35,7 @@ For a more simplified version of the pipeline of Grounding DINO and SAM take a l
 
 ## Model training
 
-In case of training the model it is possible to do it using a Topological loss and Geometrical loss. For more information regarding topological loss see the original literature. To train the model using topological loss, adjust the hyperparameters and dataset location and run:
+In case of training the model it is possible to do it using a Topological loss and Geometrical loss. For more information regarding topological loss see the [original literature](https://arxiv.org/abs/2203.01703). To train the model using topological loss, adjust the hyperparameters and dataset location and run:
 
 ```
     python /utils/train_model/train_topo+geom_private.py
