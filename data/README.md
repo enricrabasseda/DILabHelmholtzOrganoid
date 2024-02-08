@@ -28,9 +28,13 @@ This semi-automatic tool to annotate the images from the private dataset can be 
 
 [OrgaQuant](https://www.nature.com/articles/s41598-019-48874-y) dataset  contains human intestinal organoids images. It also contains information about the framing boxes for all the organoids in these images. We have generated the masks for the organoids with SAM ViT-Large given every original framing box as a prompt. 
 
-This dataset is already given with a train and test split. We have used the test split as a hold-out dataset to test our model.
+This dataset is already given with a train and test split. We have used the test split as a hold-out dataset to test our model. Download it from the original source written above and save it as `/data/intestinal_organoid_dataset/`. Run the following script to reply our processing of the dataset:
 
-The structure of the dataset looks like this:
+```
+    python /utils/data_processing/orgaquant.py
+```
+
+The structure of the dataset's folder after the processing looks like this:
 
 ```
     intestinal_organoid_dataset
@@ -57,9 +61,17 @@ The structure of the dataset looks like this:
 
 [OrganoSeg](https://www.nature.com/articles/s41598-017-18815-8) presented a dataset with colon and colorectal-cancer organoid morphologies. The original images had resolution 864x648 and also had a mask to identify ground-truth organoids in the image. We have created patches using a sliding window with overlap and for every image we have generated 4 patches of size 432x432. Same work has been done for the masks.
 
-To get instance segmentation masks we have used Connected Component Analysis to connect one unique mask to every organoid. The code can be seen in `/notebooks/dataset_generation/organoseg_dataset_generation.ipynb`. We have filtered out of the dataset all masks that are too small to be detected or cannot be clearly recognized from the image. To do that we kept masks that have an area bigger than 2000 pixels.
+To get instance segmentation masks we have used Connected Component Analysis to connect one unique mask to every organoid. We have filtered out of the dataset all masks that are too small to be detected or cannot be clearly recognized from the image. To do that we kept masks that have an area bigger than 2000 pixels. 
 
-The structure of the dataset looks like this:
+Download the dataset from the original source written above and save it as `/data/colon_dataset/`.Run the following script to reply our processing of the dataset:
+
+```
+    python /utils/data_processing/organoseg.py
+```
+
+
+
+The structure of the dataset's folder after the processing looks like this:
 
 ```
     colon_dataset
