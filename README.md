@@ -1,6 +1,6 @@
 # TUM-DI-LAB-Helmholtz
 
-In this project we have fine-tuned SAM on Organoid data with novel topological data analysis techniques. 
+In this project we have fine-tuned SAM on Organoid data with novel topological data analysis techniques. We also present a semi-automatic tool for organoid image annotation.
 
 ## Introduction
 
