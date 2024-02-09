@@ -53,7 +53,7 @@ def train_model(model, prompt, optimizer, geometric_loss, train_dataloader, val_
     Returns:
         train_losses (List): list containing the train losses for each epoch
         val_losses (List): list containing the validation losses for each epoch
-        model (transformers.model): model with best performance on validation dataset
+        best_model (transformers.model): model with best performance on validation dataset
     """
     model.to(device)
 
