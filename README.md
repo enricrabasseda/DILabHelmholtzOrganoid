@@ -51,7 +51,7 @@ These trained models will be saved in the folder `/models/`.
 
 ## Model evaluation
 
-This method requires at least one model to compare in the folder `/models/`. In case of not having fine-tuned any SAM version, like specified above, download our fine-tuned version and save it in the mentioned folder. Depending on the hold-out dataset for which the model needs to be tested there are different python scripts. For example, for OrgaQuant dataset run:
+This method requires at least one model to compare in the folder `/models/`. In case of not having fine-tuned any SAM version, like specified above, download our [fine-tuned version](https://drive.google.com/file/d/114cjBcZ8fCYFGdgRDMX_Qey42j5dUHY4/view?usp=share_link) and save it in the mentioned folder. Depending on the hold-out dataset for which the model needs to be tested there are different python scripts. For example, for OrgaQuant dataset run:
 
 ```
     python /utils/evaluate_model/metrics_calculation_orgaquant.py
