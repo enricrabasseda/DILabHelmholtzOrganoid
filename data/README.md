@@ -22,7 +22,7 @@ Unfortunately, this dataset cannot be provided.
 
 ### Private dataset generation
 
-This semi-automatic tool to annotate the images from the private dataset can be seen in the notebook `notebooks/dataset_generation/private_dataset_generation.ipynb`. Follow the steps there to annotate a new image of organoids.
+This semi-automatic tool to annotate the images from the private dataset can be seen in the notebook `notebooks/dataset_generation/private_dataset_annotation.ipynb`. Follow the steps there to annotate a new image of organoids.
 
 ## Orgaquant
 

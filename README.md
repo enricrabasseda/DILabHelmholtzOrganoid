@@ -29,7 +29,7 @@ We recommend to set up a virtual environment and then install all the required p
 The model has been fine-tuned with a private dataset that cannot be provided. However, you can download the hold-out datasets to and place them in `/data/`. More information regarding the datasets structure can be found `/data/README.md`.
 
 ### Semi-automatic organoid images annotation
-The private organoid dataset that was used for the fine-tuning of SAM was not annotated. We have implemented a semi-automatic process for data annotation that can be replicated with the notebook `/notebooks/dataset_generation/private_dataset_generation.ipynb`.
+The private organoid dataset that was used for the fine-tuning of SAM was not annotated. We have implemented a semi-automatic process for data annotation that can be replicated with the notebook `/notebooks/dataset_generation/private_dataset_annotation.ipynb`.
 
 For a more simplified version of the pipeline of Grounding DINO and SAM take a look at the notebook `notebooks/inference/dino_and_sam_inference.ipynb`. 
 
