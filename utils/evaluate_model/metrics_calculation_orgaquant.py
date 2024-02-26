@@ -10,31 +10,32 @@ from transformers import SamProcessor
 from transformers import SamModel 
 
 import sys
-sys.path.append('/home/ubuntu')
+# Set up main directory. Write it here
+sys.path.append('...')
 
 from utils.sam_dataset import SAMDataset
 from utils.metrics_calculation import metrics_dict_given_model
 
 # Load intestinal dataset
-int_ds = load_dataset('json', data_files='/home/ubuntu/data/intestinal_organoid_dataset/metadata.json')
+int_ds = load_dataset('json', data_files='.../data/intestinal_organoid_dataset/metadata.json')
 test_int_ds = int_ds["train"].filter(lambda example: example["split"] == "test")
 del(int_ds)
 print(f'Length of test dataset of intestinal organoids:', len(test_int_ds))
 
 # Load models
 # Define dataset location folder
-data_folder = "/home/ubuntu/data/intestinal_organoid_dataset/"
+data_folder = ".../data/intestinal_organoid_dataset/"
 processor = SamProcessor.from_pretrained("facebook/sam-vit-base")
 sam_test_int_ds = SAMDataset(dataset=test_int_ds, processor=processor, data_folder=data_folder)
 
 
 # Load different models
-model_train_topo_private = torch.load("/home/ubuntu/models/topo+geom_box-prompt.pth")
+model_train_topo_private = torch.load(".../models/topo+geom_box-prompt.pth")
 for name, param in model_train_topo_private.named_parameters():
   if name.startswith("vision_encoder") or name.startswith("prompt_encoder"):
     param.requires_grad_(False)
 
-model_train_geom_private = torch.load("/home/ubuntu/models/geom_box-prompt.pth")
+model_train_geom_private = torch.load(".../models/geom_box-prompt.pth")
 for name, param in model_train_geom_private.named_parameters():
   if name.startswith("vision_encoder") or name.startswith("prompt_encoder"):
     param.requires_grad_(False)
@@ -107,7 +108,7 @@ df = pd.DataFrame(list(zip(models_list, iou_list, dsc_list,
                                      # 'Hausdorff Distance', 
                                      'AP', 'F1'])
 
-df.to_csv("/home/ubuntu/outputs/models_metric_noise_intestinal.csv")
+df.to_csv(".../outputs/models_metric_noise_intestinal.csv")
 
 print("First metrics computed")
 
@@ -159,6 +160,6 @@ df = pd.DataFrame(list(zip(models_list, iou_list, dsc_list,
                                      # 'Hausdorff Distance', 
                                      'AP', 'F1'])
 
-df.to_csv("/home/ubuntu/outputs/models_metric_gt_intestinal.csv")
+df.to_csv(".../outputs/models_metric_gt_intestinal.csv")
 
 print("Second metrics computed")

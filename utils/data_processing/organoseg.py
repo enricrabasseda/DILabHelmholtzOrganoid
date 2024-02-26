@@ -150,7 +150,7 @@ for i in range(len(list_augmented_seg_images_name)):
             mask_for_label = (labels == label)*255
             # Save it
             mask_path = "colon_dataset/augmented/colon_instance_masks/" + "slice_" + img_name + "_" + num + "_bw.png"
-            cv2.imwrite("/home/ubuntu/data/" + mask_path, mask_for_label)
+            cv2.imwrite(".../data/" + mask_path, mask_for_label)
             # Get box corresponding to mask
             box_mask = [stats[label,0], stats[label,1], stats[label,0] + stats[label,2], stats[label,1] + stats[label,3]]
             # Save information in the lists

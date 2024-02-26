@@ -11,6 +11,7 @@ from transformers import SamProcessor
 from transformers import SamModel 
 
 import sys
+# Set up main directory, write it here
 sys.path.append('/home/ubuntu')
 
 from utils.sam_dataset import SAMDataset
@@ -18,7 +19,7 @@ from utils.model_training import train_model
 
 
 # Load datasets
-ds = load_dataset('json', data_files='/home/ubuntu/data/private/metadata.json')
+ds = load_dataset('json', data_files='.../data/private/metadata.json')
 train_dataset = ds["train"].filter(lambda example: example["split"] == "train")
 val_dataset = ds["train"].filter(lambda example: example["split"] == "val")
 
@@ -27,7 +28,7 @@ print(f'Length of train dataset:', len(train_dataset))
 print(f'Length of validation dataset', len(val_dataset))
 
 # Define dataset location folder
-data_folder = "/home/ubuntu/data/private"
+data_folder = ".../data/private"
 
 # Import SAM Processor
 processor = SamProcessor.from_pretrained("facebook/sam-vit-base")
@@ -66,7 +67,7 @@ train_losses, val_losses, best_model = train_model(model = model, prompt = "box"
                                                    topological_loss = False)
 
 # Save the trained model
-save_path = "/home/ubuntu/models/geom_box-prompt.pth"
+save_path = ".../models/geom_box-prompt.pth"
 torch.save(best_model, save_path)
 
 # Create .csv with losses
@@ -74,4 +75,4 @@ epochs = range(1,num_epochs+1)
 df = pd.DataFrame(list(zip(epochs, train_losses, val_losses)),
                columns =['epoch', 'train_loss', 'val_loss'])
 
-df.to_csv("/home/ubuntu/outputs/loss_results_geom.csv")
+df.to_csv(".../outputs/loss_results_geom.csv")

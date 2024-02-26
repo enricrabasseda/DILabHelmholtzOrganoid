@@ -10,13 +10,14 @@ from transformers import SamProcessor
 from transformers import SamModel 
 
 import sys
-sys.path.append('/home/ubuntu')
+# Set up main directory
+sys.path.append('...')
 
 from utils.sam_dataset import SAMDataset
 from utils.metrics_calculation import metrics_dict_given_model
 
 # Load colon dataset
-colon_ds = load_dataset('json', data_files='/home/ubuntu/data/colon_dataset/metadata_instance_segmentation.json')
+colon_ds = load_dataset('json', data_files='.../data/colon_dataset/metadata_instance_segmentation.json')
 
 test_colon_ds = colon_ds["train"].filter(lambda example: example["split"] == "test")
 del(colon_ds)
@@ -24,18 +25,18 @@ print(f'Length of test dataset of colon organoids:', len(test_colon_ds))
 
 # Load models
 # Define dataset location folder
-data_folder = "/home/ubuntu/data/"
+data_folder = ".../data/"
 processor = SamProcessor.from_pretrained("facebook/sam-vit-base")
 sam_test_colon_ds = SAMDataset(dataset=test_colon_ds, processor=processor, data_folder=data_folder)
 
 
 # Load different models
-model_train_topo_private = torch.load("/home/ubuntu/models/topo+geom_box-prompt.pth")
+model_train_topo_private = torch.load(".../models/topo+geom_box-prompt.pth")
 for name, param in model_train_topo_private.named_parameters():
   if name.startswith("vision_encoder") or name.startswith("prompt_encoder"):
     param.requires_grad_(False)
 
-model_train_geom_private = torch.load("/home/ubuntu/models/geom_box-prompt.pth")
+model_train_geom_private = torch.load(".../models/geom_box-prompt.pth")
 for name, param in model_train_geom_private.named_parameters():
   if name.startswith("vision_encoder") or name.startswith("prompt_encoder"):
     param.requires_grad_(False)
@@ -108,7 +109,7 @@ df = pd.DataFrame(list(zip(models_list, iou_list, dsc_list,
                                      # 'Hausdorff Distance', 
                                      'AP', 'F1'])
 
-df.to_csv("/home/ubuntu/outputs/models_metric_noise_colon.csv")
+df.to_csv(".../outputs/models_metric_noise_colon.csv")
 
 print("First metrics computed")
 
@@ -160,6 +161,6 @@ df = pd.DataFrame(list(zip(models_list, iou_list, dsc_list,
                                      # 'Hausdorff Distance', 
                                      'AP', 'F1'])
 
-df.to_csv("/home/ubuntu/outputs/models_metric_gt_colon.csv")
+df.to_csv(".../outputs/models_metric_gt_colon.csv")
 
 print("Second metrics computed")
